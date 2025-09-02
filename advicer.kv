@@ -1,0 +1,118 @@
+<Button@Button>:
+    background_color: 0.1, 0.1, 0.1, 1
+    color: 1, 1, 1, 1
+    size_hint: 0.2, 0.2
+
+<AdvicerLayout>:
+    orientation: 'vertical'
+    spacing: 30
+    padding: 10
+
+    TextInput:
+        id: display
+        text: 'Тут будет совет...'
+        font_size: 30
+        size_hint_y: 0.3
+        multiline: True
+        readonly: True
+        background_color: 0, 0, 0, 0.5
+        foreground_color: 255, 255, 255, 1
+        cursor_color: 255, 255, 255, 1
+
+    AnchorLayout:
+        size_hint_y: 0.15
+        anchor_x: 'center'
+        anchor_y: 'center'
+
+        Button:
+            text: 'Держи совет'
+            on_press:
+                app.root.advice_button()
+                app.root.play_click_sound()
+            size_hint_y: 0.6
+            size_hint_x: 0.6
+            font_size: 30
+            bold: True
+            background_color: 0.2, 0.6, 0.8, 0.8
+
+    BoxLayout:
+        orientation: 'horizontal'
+        spacing: 10
+        size_hint_y: 0.5
+        padding: 10
+
+        Button:
+            text: 'Кот'
+            on_press:
+                app.root.cat_button()
+                app.root.play_cat_sound()
+
+        Button:
+            text: 'Утка'
+            on_press:
+                app.root.duck_button()
+                app.root.play_duck_sound()
+
+        Button:
+            text: 'Аплодисменты'
+            on_press:
+                app.root.applause_button()
+                app.root.play_applause_sound()
+
+        Button:
+            text: 'Ужас'
+            on_press:
+                app.root.judge_button()
+                app.root.play_judge_sound()
+
+        Button:
+            text: 'Барабаны'
+            on_press:
+                app.root.drum_button()
+                app.root.play_drum_sound()
+
+<ScreamerPopup>:
+    title: ''
+    size_hint: 0.9, 0.9
+    BoxLayout:
+        Image:
+            source: 'assets/images/screamer.jpg'
+            allow_stretch: True
+            keep_ratio: False
+
+<RizzUpPopup>:
+    size_hint: 0.7, 0.5
+    auto_dismiss: True
+    title: "Rizz!"
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: "69!"
+            font_size: 30
+            halign: 'center'
+        Button:
+            text: "Закрыть"
+            size_hint_y: 0.3
+            on_press: root.dismiss()
+        Image:
+            source: 'assets/images/rizzing_cat1.jpg'
+            allow_stretch: True
+            keep_ratio: False
+
+<RickrollPopup>:
+    size_hint: 0.9, 0.9
+    auto_dismiss: True
+    title: "Rickroll"
+    BoxLayout:
+        orientation: 'vertical'
+        Video:
+            id: rick_video
+            source: 'assets/videos/rickroll.mp4'
+            state: 'play'
+            options: {'eos': 'loop'}
+            allow_stretch: True
+            keep_ratio: True
+        Button:
+            text: "Закрыть"
+            size_hint_y: 0.2
+            on_press: root.dismiss()
