@@ -1,0 +1,12 @@
+.idea/
+*.iml
+venv/
+.venv/
+env/
+dist/
+build/
+*.exe
+*.pyc
+__pycache__/
+*.log
+*.tmp
