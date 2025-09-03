@@ -6,6 +6,11 @@ from kivy.graphics import Color, Rectangle
 from kivy.clock import Clock
 import random
 from kivy.core.audio import SoundLoader
+import os
+from kivy.lang import Builder
+
+kv_path = os.path.join(os.path.dirname(__file__), 'advicer.kv')
+Builder.load_file(kv_path)
 
 sound = SoundLoader.load('assets/sounds/click_sound.wav')
 if sound:
