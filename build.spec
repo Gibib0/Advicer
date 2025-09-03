@@ -7,12 +7,13 @@ a = Analysis(
     pathex=[],
     binaries=[],
     datas=[
-        ('assets/images/*', 'assets/images'),
-        ('assets/sounds/*', 'assets/sounds'),
-        ('assets/icons/*', 'assets/icons'),
+        ('assets/sounds/*.wav', 'assets/sounds'),
+        ('assets/images/*.jpg', 'assets/images'),
+        ('assets/icons/*.ico', 'assets/icons')
     ],
     hiddenimports=[],
     hookspath=[],
+    hooksconfig={},
     runtime_hooks=[],
     excludes=[],
     win_no_prefer_redirects=False,
@@ -20,30 +21,27 @@ a = Analysis(
     cipher=block_cipher,
     noarchive=False,
 )
-
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
 exe = EXE(
     pyz,
     a.scripts,
+    a.binaries,
+    a.zipfiles,
+    a.datas,
     [],
-    exclude_binaries=True,
-    name='AdvicerApp',
+    name='DuckTranslator',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    console=False,
-    icon='assets/icons/icon.ico'
-)
-
-coll = COLLECT(
-    exe,
-    a.binaries,
-    a.zipfiles,
-    a.datas,
-    strip=False,
-    upx=True,
     upx_exclude=[],
-    name='AdvicerApp'
+    runtime_tmpdir=None,
+    console=False,
+    disable_windowed_traceback=False,
+    argv_emulation=False,
+    target_arch=None,
+    codesign_identity=None,
+    entitlements_file=None,
+    icon='assets/icons/icon.ico',
 )
