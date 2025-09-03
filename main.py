@@ -191,6 +191,10 @@ class AdvicerLayout(BoxLayout):
             self.show_screamer2()
             return
         
+        if self.advice_counter == 250:
+            self.show_grass()
+            return
+        
         if self.advice_counter == 300:
             self.show_message()
             return
@@ -278,6 +282,9 @@ class AdvicerLayout(BoxLayout):
 
     def show_madness(self):
         webbrowser.open('https://www.youtube.com/watch?v=8djnfFx_E0Y')
+
+    def show_grass(self):
+        webbrowser.open('https://www.youtube.com/watch?v=dzVahzHh2W4')
 
     def cat_button(self):
         self.check_secret_sequence('cat')
