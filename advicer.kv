@@ -20,7 +20,7 @@
         cursor_color: 255, 255, 255, 1
 
     AnchorLayout:
-        size_hint_y: 0.15
+        size_hint_y: 0.25
         anchor_x: 'center'
         anchor_y: 'center'
 
@@ -29,16 +29,20 @@
             on_press:
                 app.root.advice_button()
                 app.root.play_click_sound()
-            size_hint_y: 0.6
-            size_hint_x: 0.6
-            font_size: 30
+            size_hint_y: 0.7
+            size_hint_x: 0.7
+            valign: 'middle'
+            halign: 'center'
+            font_size: 40
             bold: True
             background_color: 0.2, 0.6, 0.8, 0.8
+            padding: 0 
 
     Label:
         id: counter
         text: "Смотри сколько советов: 0"
-        font_size: 20
+        font_size: 30
+        bold: True
         size_hint_y: 0.1
         readonly: True
         background_color: 0, 0, 0, 0.5
@@ -90,6 +94,24 @@
             allow_stretch: True
             keep_ratio: False
 
+<Screamer2Popup>:
+    title: ''
+    size_hint: 1, 1
+    BoxLayout:
+        Image:
+            source: 'assets/images/screamer2.jpg'
+            allow_stretch: True
+            keep_ratio: False
+
+<KostyaPopup>:
+    title: ''
+    size_hint: 1, 1
+    BoxLayout:
+        Image:
+            source: 'assets/images/kostya.jpg'
+            allow_stretch: True
+            keep_ratio: False
+
 <RizzUpPopup>:
     title: ''
     size_hint: 0.9, 0.9
@@ -126,3 +148,42 @@
             allow_stretch: True
             keep_ratio: False
 
+<GigaPopup>:
+    title: ''
+    size_hint: 0.9, 0.9
+    BoxLayout:
+        Image:
+            source: 'assets/images/giga_barash.jpg'
+            allow_stretch: True
+            keep_ratio: False
+
+<PenguinsPopup>:
+    title: ''
+    size_hint: 0.9, 0.9
+    BoxLayout:
+        Image:
+            source: 'assets/images/penguins.jpg'
+            allow_stretch: True
+            keep_ratio: False
+
+<MessagePopup>:
+    title: 'You fucking moron'
+    size_hint: 0.8, 0.6
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'ARE YOU KIDDING ME!? YOU FUCKING BASTARD, HOW MUCH DO YOU HAVE TO PRESS THIS BUTTON? HOW HAS YOUR FINGER NOT FELL OFF YET?! GO TOUCH THE GRASS, NERDY! WHEN WAS THE LAST TIME YOU LOOKED AT THE SUN, FOOL?? DO YOU REALLY NEED THIS ADVICE SO MUCH?! GO TO YOUR CALCULATOR AND DIVIDE BY ZERO!........ LOVE YA.'
+            text_size: self.width, None
+            halign: 'center'
+            valign: 'middle'
+            size_hint_y: 0.8
+
+        AnchorLayout:
+            size_hint_y: 0.2
+            anchor_x: 'center'
+            anchor_y: 'center'
+            Button:
+                text: 'OK'
+                size_hint: (0.4, 0.8)
+                on_press:
+                    root.dismiss()

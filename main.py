@@ -20,7 +20,7 @@ class AdvicerLayout(BoxLayout):
         self.current_advice = None
         self.reset_screen = False
 
-        self.background_sound = SoundLoader.load('assets/sounds/background_sound.ogg')
+        self.background_sound = SoundLoader.load('assets/sounds/background_sound.wav')
         self.click_sound = SoundLoader.load('assets/sounds/click_sound.wav')
         self.cat_sound = SoundLoader.load('assets/sounds/cat_sound.wav')
         self.duck_sound = SoundLoader.load('assets/sounds/duck_sound.wav')
@@ -28,6 +28,8 @@ class AdvicerLayout(BoxLayout):
         self.judge_sound = SoundLoader.load('assets/sounds/judge_sound.wav')
         self.drum_sound = SoundLoader.load('assets/sounds/drum_sound.wav')
         self.screamer_sound = SoundLoader.load('assets/sounds/screamer_sound.wav')
+        self.screamer2_sound = SoundLoader.load('assets/sounds/screamer2_sound.wav')
+        self.kostya_sound = SoundLoader.load('assets/sounds/kostya_sound.wav')
 
         if self.background_sound:
             self.background_sound.loop = True
@@ -91,6 +93,21 @@ class AdvicerLayout(BoxLayout):
             'Ты думаешь советы бесконечные?',
             'Nigga',
             'Обернись',
+            'Пора сделать паузу',
+            'Посчитай до десяти, потом до двадцати... а потом иди на.....',
+            'Ты уникален, даже если пока не знаешь как',
+            'Иди помой руки, вдруг пригодится',
+            'Иногда стоит просто посидеть в тишине',
+            'Подумай о котиках, даже если у тебя их нет',
+            'Попробуй притвориться, что ты утка… снова',
+            'Встань',
+            'Сядь',
+            'Ты уже нажал на эту кнопку слишком много раз… или нет?',
+            'Ты все равно не сможешь перечитать все советы, которые я прописала',
+            'И ради этого я лягла в 2 ночи',
+            'Ты знал что в пинтересте нельзя напрямую найти расисткие картинки?',
+            'Уже видел Бараша гигачада?',
+            'Я кажись себе руку накачала пока это тестировала...',
         ]
 
     def change_background(self, dt):
@@ -131,15 +148,12 @@ class AdvicerLayout(BoxLayout):
         if self.background_sound and self.background_sound.state == 'play':
             self.background_sound.stop()
 
-    def stop_screamer_sound(self, instance=None):
-        if self.error_sound and self.error_sound.state == 'play':
-            self.error_sound.stop()
-
-        if self.background_sound and self.background_sound.state != 'play':
-            self.background_sound.play()
-
     def advice_button(self):
         self.advice_counter += 1
+
+        if self.advice_counter == 3:
+            self.show_penguins()
+            return
 
         if self.advice_counter == 18:
             self.show_sex()
@@ -148,13 +162,17 @@ class AdvicerLayout(BoxLayout):
         if self.advice_counter == 30:
             self.show_what()
             return
+        
+        if self.advice_counter == 52:
+            self.show_kostya()
+            return
 
         if self.advice_counter == 69:
             self.show_rizz()
             return
         
         if self.advice_counter == 88:
-            self.meme_what()
+            self.show_meme()
             return
         
         if self.advice_counter == 100:
@@ -163,6 +181,18 @@ class AdvicerLayout(BoxLayout):
         
         if self.advice_counter == 150:
             self.show_madness()
+            return
+        
+        if self.advice_counter == 180:
+            self.show_giga()
+            return
+        
+        if self.advice_counter == 200:
+            self.show_screamer2()
+            return
+        
+        if self.advice_counter == 300:
+            self.show_message()
             return
 
         random_advice = random.choice(self.advices)
@@ -182,11 +212,41 @@ class AdvicerLayout(BoxLayout):
 
         Clock.schedule_once(lambda dt: screamer.dismiss(), 1)
 
+    def show_screamer2(self):
+        self.stop_background_sound()
+
+        screamer = Screamer2Popup()
+        screamer.open()
+
+        if self.screamer2_sound:
+            self.screamer2_sound.volume = 1.0
+            self.screamer2_sound.play()
+
+        Clock.schedule_once(lambda dt: screamer.dismiss(), 1)
+
+    def show_kostya(self):
+        self.stop_background_sound()
+
+        kostya = KostyaPopup()
+        kostya.open()
+
+        if self.kostya_sound:
+            self.kostya_sound.volume = 1.0
+            self.kostya_sound.play()
+
+        Clock.schedule_once(lambda dt: kostya.dismiss(), 1)
+
     def show_rizz(self):
         popup = RizzUpPopup()
         popup.open()
 
         Clock.schedule_once(lambda dt: popup.dismiss(), 1)
+        
+    def show_penguins(self):
+        popup = PenguinsPopup()
+        popup.open()
+
+        Clock.schedule_once(lambda dt: popup.dismiss(), 1.5)
 
     def show_sex(self):
         popup = SexPopup()
@@ -200,11 +260,21 @@ class AdvicerLayout(BoxLayout):
 
         Clock.schedule_once(lambda dt: popup.dismiss(), 1)
 
-    def meme_what(self):
+    def show_meme(self):
         popup = MemePopup()
         popup.open()
 
         Clock.schedule_once(lambda dt: popup.dismiss(), 1)
+        
+    def show_giga(self):
+        popup = GigaPopup()
+        popup.open()
+
+        Clock.schedule_once(lambda dt: popup.dismiss(), 1)
+        
+    def show_message(self):
+        popup = MessagePopup()
+        popup.open()
 
     def show_madness(self):
         webbrowser.open('https://www.youtube.com/watch?v=8djnfFx_E0Y')
@@ -242,14 +312,39 @@ class AdvicerApp(App):
         return AdvicerLayout()
 
 class ScreamerPopup(Popup):
+    def on_dismiss(self):
+        app = App.get_running_app()
+        if hasattr(app.root, 'background_sound') and app.root.background_sound:
+            if app.root.background_sound.state != 'play':
+                app.root.background_sound.play()
+
+class Screamer2Popup(Popup):
+    def on_dismiss(self):
+        app = App.get_running_app()
+        if hasattr(app.root, 'background_sound') and app.root.background_sound:
+            if app.root.background_sound.state != 'play':
+                app.root.background_sound.play()
+
+class KostyaPopup(Popup):
+    def on_dismiss(self):
+        app = App.get_running_app()
+        if hasattr(app.root, 'background_sound') and app.root.background_sound:
+            if app.root.background_sound.state != 'play':
+                app.root.background_sound.play()
+
+class MessagePopup(Popup):
     pass
 class RizzUpPopup(Popup):
+    pass
+class PenguinsPopup(Popup):
     pass
 class SexPopup(Popup):
     pass
 class WhatPopup(Popup):
     pass
 class MemePopup(Popup):
+    pass
+class GigaPopup(Popup):
     pass
 
 if __name__ == '__main__':
