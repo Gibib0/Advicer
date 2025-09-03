@@ -1,15 +1,18 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from kivy.uix.label import Label
 from kivy.uix.popup import Popup
-from kivy.uix.image import Image
-from kivy.uix.video import Video
+import webbrowser
 from kivy.graphics import Color, Rectangle
 from kivy.clock import Clock
 import random
 from kivy.core.audio import SoundLoader
-import os
+
+sound = SoundLoader.load('assets/sounds/click_sound.wav')
+if sound:
+    print("AUDIO PROVIDER:", type(sound))
+else:
+    print("Не удалось загрузить звук!")
+
 
 class AdvicerLayout(BoxLayout):
     def __init__(self, **kwargs):
@@ -17,7 +20,7 @@ class AdvicerLayout(BoxLayout):
         self.current_advice = None
         self.reset_screen = False
 
-        self.background_sound = SoundLoader.load('assets/sounds/background_sound.wav')
+        self.background_sound = SoundLoader.load('assets/sounds/background_sound.ogg')
         self.click_sound = SoundLoader.load('assets/sounds/click_sound.wav')
         self.cat_sound = SoundLoader.load('assets/sounds/cat_sound.wav')
         self.duck_sound = SoundLoader.load('assets/sounds/duck_sound.wav')
@@ -87,6 +90,7 @@ class AdvicerLayout(BoxLayout):
             'Кот, барабаны, две утки, кот, аплодисменты, утка',
             'Ты думаешь советы бесконечные?',
             'Nigga',
+            'Обернись',
         ]
 
     def change_background(self, dt):
@@ -137,19 +141,36 @@ class AdvicerLayout(BoxLayout):
     def advice_button(self):
         self.advice_counter += 1
 
-        if self.advice_counter == 100:
-            self.show_error()
-            self.advice_counter = 0
+        if self.advice_counter == 18:
+            self.show_sex()
+            return
+        
+        if self.advice_counter == 30:
+            self.show_what()
             return
 
         if self.advice_counter == 69:
             self.show_rizz()
             return
+        
+        if self.advice_counter == 88:
+            self.meme_what()
+            return
+        
+        if self.advice_counter == 100:
+            self.show_screamer()
+            return
+        
+        if self.advice_counter == 150:
+            self.show_madness()
+            return
 
         random_advice = random.choice(self.advices)
         self.ids.display.text = random_advice
 
-    def show_error(self):
+        self.ids.counter.text = f'Смотри сколько советов: {self.advice_counter}'
+
+    def show_screamer(self):
         self.stop_background_sound()
 
         screamer = ScreamerPopup()
@@ -159,11 +180,34 @@ class AdvicerLayout(BoxLayout):
             self.screamer_sound.volume = 1.0
             self.screamer_sound.play()
 
+        Clock.schedule_once(lambda dt: screamer.dismiss(), 1)
+
     def show_rizz(self):
         popup = RizzUpPopup()
         popup.open()
 
-        Clock.schedule_once(lambda dt: popup.dismiss(), 2)
+        Clock.schedule_once(lambda dt: popup.dismiss(), 1)
+
+    def show_sex(self):
+        popup = SexPopup()
+        popup.open()
+
+        Clock.schedule_once(lambda dt: popup.dismiss(), 1)
+
+    def show_what(self):
+        popup = WhatPopup()
+        popup.open()
+
+        Clock.schedule_once(lambda dt: popup.dismiss(), 1)
+
+    def meme_what(self):
+        popup = MemePopup()
+        popup.open()
+
+        Clock.schedule_once(lambda dt: popup.dismiss(), 1)
+
+    def show_madness(self):
+        webbrowser.open('https://www.youtube.com/watch?v=8djnfFx_E0Y')
 
     def cat_button(self):
         self.check_secret_sequence('cat')
@@ -190,8 +234,7 @@ class AdvicerLayout(BoxLayout):
             self.user_sequence = []
 
     def show_rickroll(self):
-        rickroll = RickrollPopup()
-        rickroll.open()
+        webbrowser.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1')
 
 class AdvicerApp(App):
     def build(self):
@@ -202,7 +245,11 @@ class ScreamerPopup(Popup):
     pass
 class RizzUpPopup(Popup):
     pass
-class RickrollPopup(Popup):
+class SexPopup(Popup):
+    pass
+class WhatPopup(Popup):
+    pass
+class MemePopup(Popup):
     pass
 
 if __name__ == '__main__':

@@ -35,6 +35,16 @@
             bold: True
             background_color: 0.2, 0.6, 0.8, 0.8
 
+    Label:
+        id: counter
+        text: "Смотри сколько советов: 0"
+        font_size: 20
+        size_hint_y: 0.1
+        readonly: True
+        background_color: 0, 0, 0, 0.5
+        foreground_color: 255, 255, 255, 1
+        cursor_color: 255, 255, 255, 1
+
     BoxLayout:
         orientation: 'horizontal'
         spacing: 10
@@ -81,38 +91,38 @@
             keep_ratio: False
 
 <RizzUpPopup>:
-    size_hint: 0.7, 0.5
-    auto_dismiss: True
-    title: "Rizz!"
+    title: ''
+    size_hint: 0.9, 0.9
     BoxLayout:
-        orientation: 'vertical'
-        Label:
-            text: "69!"
-            font_size: 30
-            halign: 'center'
-        Button:
-            text: "Закрыть"
-            size_hint_y: 0.3
-            on_press: root.dismiss()
         Image:
             source: 'assets/images/rizzing_cat1.jpg'
             allow_stretch: True
             keep_ratio: False
 
-<RickrollPopup>:
+<SexPopup>:
+    title: ''
     size_hint: 0.9, 0.9
-    auto_dismiss: True
-    title: "Rickroll"
     BoxLayout:
-        orientation: 'vertical'
-        Video:
-            id: rick_video
-            source: 'assets/videos/rickroll.mp4'
-            state: 'play'
-            options: {'eos': 'loop'}
+        Image:
+            source: 'assets/images/sexy.jpg'
             allow_stretch: True
-            keep_ratio: True
-        Button:
-            text: "Закрыть"
-            size_hint_y: 0.2
-            on_press: root.dismiss()
+            keep_ratio: False
+
+<WhatPopup>:
+    title: ''
+    size_hint: 0.9, 0.9
+    BoxLayout:
+        Image:
+            source: 'assets/images/what.jpg'
+            allow_stretch: True
+            keep_ratio: False
+
+<MemePopup>:
+    title: ''
+    size_hint: 0.9, 0.9
+    BoxLayout:
+        Image:
+            source: 'assets/images/meme.jpg'
+            allow_stretch: True
+            keep_ratio: False
+
